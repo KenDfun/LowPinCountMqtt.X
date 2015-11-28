@@ -3,7 +3,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "160 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"95 mcc_generated_files/eusart.h
+"106 mcc_generated_files/eusart.h
 [v _EUSART_Initilize `(v ~T0 @X0 0 ef ]
 "104 mcc_generated_files/tmr0.h
 [v _TMR0_Initialize `(v ~T0 @X0 0 ef ]
@@ -3922,10 +3922,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 12: typedef unsigned char bool;
 [; ;interrupt_manager.h: 111: void interrupt INTERRUPT_InterruptManager(void);
-[; ;eusart.h: 95: void EUSART_Initilize(void);
-[; ;eusart.h: 116: void EUSART_NoTransmit(void);
-[; ;eusart.h: 136: uint8_t EUSART_Read(void);
-[; ;eusart.h: 156: void EUSART_Write(uint8_t txData);
+[; ;eusart.h: 77: extern volatile uint8_t eusartTxBufferRemaining;
+[; ;eusart.h: 78: extern volatile uint8_t eusartRxCount;
+[; ;eusart.h: 106: void EUSART_Initilize(void);
+[; ;eusart.h: 128: void EUSART_NoTransmit(void);
+[; ;eusart.h: 177: uint8_t EUSART_Read(void);
+[; ;eusart.h: 202: void EUSART_Write(uint8_t txData);
+[; ;eusart.h: 223: void EUSART_Transmit_ISR(void);
+[; ;eusart.h: 244: void EUSART_Receive_ISR(void);
 [; ;tmr0.h: 104: void TMR0_Initialize(void);
 [; ;tmr0.h: 137: uint8_t TMR0_ReadTimer(void);
 [; ;tmr0.h: 176: void TMR0_WriteTimer(uint8_t timerVal);

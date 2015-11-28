@@ -5277,20 +5277,45 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 95 "mcc_generated_files/eusart.h"
+# 77 "mcc_generated_files/eusart.h"
+extern volatile uint8_t eusartTxBufferRemaining;
+extern volatile uint8_t eusartRxCount;
+
+# 106
 void EUSART_Initilize(void);
 
-# 116
+# 128
 void EUSART_NoTransmit(void);
 
-# 136
+# 177
 uint8_t EUSART_Read(void);
 
-# 156
+# 202
 void EUSART_Write(uint8_t txData);
 
-# 56 "mcc_generated_files/eusart.c"
+# 223
+void EUSART_Transmit_ISR(void);
+
+# 244
+void EUSART_Receive_ISR(void);
+
+# 63 "mcc_generated_files/eusart.c"
+static uint8_t eusartTxTail = 0;
+static uint8_t eusartTxBuffer[8+1];
+volatile uint8_t eusartTxBufferRemaining=0;
+volatile uint8_t eusartTxBufferWorkingFlag=0;
+
+static uint8_t eusartRxHead = 0;
+static uint8_t eusartRxTail = 0;
+static uint8_t eusartRxBuffer[8];
+volatile uint8_t eusartRxCount;
+
+# 77
 void EUSART_Initilize(void) {
+
+PIE1bits.RCIE = 0;
+PIE1bits.TXIE = 0;
+
 
 
 
@@ -5308,33 +5333,92 @@ SPBRGL = 0xA0;
 
 SPBRGH = 0x01;
 
+
+
+
+eusartTxTail = 0;
+eusartTxBufferRemaining = sizeof (eusartTxBuffer);
+
+eusartRxHead = 0;
+eusartRxTail = 0;
+eusartRxCount = 0;
+
+eusartTxBuffer[8] = '\0';
+
+
+PIE1bits.RCIE = 1;
 }
 
-void EUSART_NoTransmit(void) {
-
-
-
-BAUDCON = 0x48;
-
-
-RCSTA = 0x80;
-
-
-TXSTA = 0x06;
-
-
-SPBRGL = 0xA0;
-
-
-SPBRGH = 0x01;
-
-}
 
 uint8_t EUSART_Read(void) {
+uint8_t readValue = 0;
 
-while (!PIR1bits.RCIF) {
+while (0 == eusartRxCount) {
 }
 
+PIE1bits.RCIE = 0;
+
+readValue = eusartRxBuffer[eusartRxTail++];
+if (sizeof (eusartRxBuffer) <= eusartRxTail) {
+eusartRxTail = 0;
+}
+eusartRxCount--;
+PIE1bits.RCIE = 1;
+
+return readValue;
+}
+
+void EUSART_Write(uint8_t txData){
+return;
+}
+
+void EUSART_str_Write(uint8_t *txData)
+{
+int i=0;
+
+while (eusartTxBufferWorkingFlag) {
+}
+
+PIE1bits.TXIE = 0;
+while(1){
+eusartTxBuffer[i] = txData[i];
+if(txData[i++]=='\0'){
+break;
+}
+if(i>=8){
+break;
+}
+}
+
+eusartTxBufferWorkingFlag = 1;
+eusartTxTail = 0;
+
+PIE1bits.TXIE = 1;
+}
+
+
+
+void EUSART_Transmit_ISR(void) {
+
+
+if(!eusartTxBufferWorkingFlag || (eusartTxBuffer[eusartTxTail]=='\0')){
+PIE1bits.TXIE = 0;
+eusartTxBufferWorkingFlag = 0;
+
+RC3=1;
+return;
+}
+
+TXREG = eusartTxBuffer[eusartTxTail++];
+if((eusartTxTail>=8) || (eusartTxBuffer[eusartTxTail]=='\0')){
+PIE1bits.TXIE = 0;
+eusartTxBufferWorkingFlag = 0;
+}
+
+return;
+}
+
+void EUSART_Receive_ISR(void) {
 if (1 == RCSTAbits.OERR) {
 
 
@@ -5342,13 +5426,11 @@ RCSTAbits.CREN = 0;
 RCSTAbits.CREN = 1;
 }
 
-return RCREG;
-}
 
-void EUSART_Write(uint8_t txData) {
-while (0 == PIR1bits.TXIF) {
+eusartRxBuffer[eusartRxHead++] = RCREG;
+if (sizeof (eusartRxBuffer) <= eusartRxHead) {
+eusartRxHead = 0;
 }
-
-TXREG = txData;
+eusartRxCount++;
 }
 

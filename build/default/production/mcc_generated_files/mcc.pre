@@ -5305,17 +5305,27 @@ typedef unsigned char bool;
 # 111 "mcc_generated_files/interrupt_manager.h"
 void interrupt INTERRUPT_InterruptManager(void);
 
-# 95 "mcc_generated_files/eusart.h"
+# 77 "mcc_generated_files/eusart.h"
+extern volatile uint8_t eusartTxBufferRemaining;
+extern volatile uint8_t eusartRxCount;
+
+# 106
 void EUSART_Initilize(void);
 
-# 116
+# 128
 void EUSART_NoTransmit(void);
 
-# 136
+# 177
 uint8_t EUSART_Read(void);
 
-# 156
+# 202
 void EUSART_Write(uint8_t txData);
+
+# 223
+void EUSART_Transmit_ISR(void);
+
+# 244
+void EUSART_Receive_ISR(void);
 
 # 104 "mcc_generated_files/tmr0.h"
 void TMR0_Initialize(void);

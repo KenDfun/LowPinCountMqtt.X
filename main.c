@@ -47,6 +47,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "mcc_generated_files/mcc.h"
 
 void sendUart(void);
+void EUSART_str_Write(char *txData);
 
 volatile char Heart_beat_flag = 0;
 volatile char Transmit_flag = 0;
@@ -74,6 +75,11 @@ void main(void) {
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
+    RC0=1;
+    RC1=0;
+    RC2=0;
+    RC3=0;
+
     while (1) {
         // Add your application code
         if(Heart_beat_flag){
@@ -87,18 +93,10 @@ void main(void) {
 
 void sendUart(void)
 {
-    static char send_data='a';
 
     if(Transmit_flag){
-        if(TXIF){
-            TXREG = send_data++;
-            if(send_data > 'z'){
-                send_data = 'a';
-            }
-
-            Transmit_flag = 0;
-        }
-
+      EUSART_str_Write((uint8_t *)"test ");
+      Transmit_flag = 0;
     }
 
 
