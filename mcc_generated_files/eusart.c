@@ -52,8 +52,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /**
   Section: Macro Declarations
  */
-#define EUSART_TX_BUFFER_SIZE 8
-#define EUSART_RX_BUFFER_SIZE 8
+#define EUSART_TX_BUFFER_SIZE 16
+#define EUSART_RX_BUFFER_SIZE 16
 
 /**
   Section: Global Variables
