@@ -5286,17 +5286,27 @@ typedef unsigned char bool;
 # 111 "mcc_generated_files/interrupt_manager.h"
 void interrupt INTERRUPT_InterruptManager(void);
 
-# 95 "mcc_generated_files/eusart.h"
+# 77 "mcc_generated_files/eusart.h"
+extern volatile uint8_t eusartTxBufferRemaining;
+extern volatile uint8_t eusartRxCount;
+
+# 106
 void EUSART_Initilize(void);
 
-# 116
+# 128
 void EUSART_NoTransmit(void);
 
-# 136
+# 177
 uint8_t EUSART_Read(void);
 
-# 156
+# 202
 void EUSART_Write(uint8_t txData);
+
+# 223
+void EUSART_Transmit_ISR(void);
+
+# 244
+void EUSART_Receive_ISR(void);
 
 # 104 "mcc_generated_files/tmr0.h"
 void TMR0_Initialize(void);
@@ -5324,23 +5334,29 @@ void OSCILLATOR_Initialize(void);
 
 # 49 "main.c"
 void sendUart(void);
+void EUSART_str_Write(char *txData);
 
 volatile char Heart_beat_flag = 0;
 volatile char Transmit_flag = 0;
 
-# 57
+# 58
 void main(void) {
 
 
 SYSTEM_Initialize();
 
-# 66
+# 67
 (INTCONbits.GIE = 1);
 
 
 (INTCONbits.PEIE = 1);
 
-# 77
+# 78
+RC0=1;
+RC1=0;
+RC2=0;
+RC3=0;
+
 while (1) {
 
 if(Heart_beat_flag){
@@ -5354,18 +5370,10 @@ sendUart();
 
 void sendUart(void)
 {
-static char send_data='a';
 
 if(Transmit_flag){
-if(TXIF){
-TXREG = send_data++;
-if(send_data > 'z'){
-send_data = 'a';
-}
-
+EUSART_str_Write((uint8_t *)"test ");
 Transmit_flag = 0;
-}
-
 }
 
 
