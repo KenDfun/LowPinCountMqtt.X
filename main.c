@@ -95,7 +95,7 @@ void sendUart(void)
 {
 
     if(Transmit_flag){
-      EUSART_str_Write((uint8_t *)"test ");
+      EUSART_str_Write((uint8_t *)"testp ");
       Transmit_flag = 0;
     }
 

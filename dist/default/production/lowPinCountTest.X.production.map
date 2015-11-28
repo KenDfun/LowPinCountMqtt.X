@@ -5,7 +5,7 @@ Linker command line:
 --edf=C:\Program Files\Microchip\xc8\v1.35\dat\en_msgs.txt -cs \
   -h+dist/default/production\lowPinCountTest.X.production.sym \
   --cmf=dist/default/production\lowPinCountTest.X.production.cmf -z \
-  -Q16F1509 -oC:\Users\ken\AppData\Local\Temp\s5ts.2 \
+  -Q16F1509 -oC:\Users\ken\AppData\Local\Temp\s7as.2 \
   -Mdist/default/production/lowPinCountTest.X.production.map -E1 -ver=XC8 \
   -ASTACK=0201Ah-021efh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -29,7 +29,7 @@ Linker command line:
   -ppowerup=CODE -pcinit=CODE -pfunctab=CODE -ACONFIG=08007h-08008h \
   -pconfig=CONFIG -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k \
-  C:\Users\ken\AppData\Local\Temp\s5ts.obj \
+  C:\Users\ken\AppData\Local\Temp\s7as.obj \
   dist/default/production\lowPinCountTest.X.production.obj 
 
 Object code version is 3.11
@@ -39,7 +39,7 @@ Machine type is 16F1509
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\ken\AppData\Local\Temp\s5ts.obj
+C:\Users\ken\AppData\Local\Temp\s7as.obj
                 end_init                             27       27        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        2    1000E       0
@@ -51,7 +51,7 @@ dist/default/production\lowPinCountTest.X.production.obj
                 text10                              11E      11E       12        8       0
                 text9                               109      109       15        8       0
                 text7                                BE       BE       1B        8       0
-                text6                               162      162        5      2B8       0
+                text6                               163      163        5      2BA       0
                 text5                                9C       9C       22        8       0
                 text4                               130      130        F        8       0
                 text3                               13F      13F        C        8       0
@@ -60,10 +60,10 @@ dist/default/production\lowPinCountTest.X.production.obj
                 maintext                             F4       F4       15        8       0
                 cstackBANK0                          38       38        2       20       1
                 cstackCOMMON                         70       70        7       70       1
-                clrtext                             15C      15C        6      2B8       0
+                clrtext                             15D      15D        6      2BA       0
                 bssBANK0                             20       20       16       20       1
                 bssCOMMON                            77       77        5       70       1
-                stringtext                          156      156        6      2AC       0
+                stringtext                          156      156        7      2AC       0
                 nvBANK0                              36       36        2       20       1
 
 TOTAL           Name                               Link     Load   Length     Space
@@ -79,17 +79,17 @@ TOTAL           Name                               Link     Load   Length     Sp
                 text10                              11E      11E       12         0
                 text9                               109      109       15         0
                 text7                                BE       BE       1B         0
-                text6                               162      162        5         0
+                text6                               163      163        5         0
                 text5                                9C       9C       22         0
                 text4                               130      130        F         0
                 text3                               13F      13F        C         0
                 text2                                39       39       39         0
                 text1                               14B      14B        B         0
                 maintext                             F4       F4       15         0
-                clrtext                             15C      15C        6         0
+                clrtext                             15D      15D        6         0
 
         CLASS   STRCODE        
-                stringtext                          156      156        6         0
+                stringtext                          156      156        7         0
 
         CLASS   STRING         
 
@@ -254,8 +254,8 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
                 intentry                       000004  000152  000156         8       0  CODE        2
                 bssBANK0                       000020  00001A  00003A        20       1  BANK0       1
                 cstackCOMMON                   000070  00000C  00007C        70       1  COMMON      1
-                stringtext                     000156  000006  00015C       2AC       0  STRCODE     2
-                clrtext                        00015C  00000B  000167       2B8       0  CODE        2
+                stringtext                     000156  000007  00015D       2AC       0  STRCODE     2
+                clrtext                        00015D  00000B  000168       2BA       0  CODE        2
                 config                         008007  000002  008009     1000E       0  CONFIG      2
 
 
@@ -271,12 +271,12 @@ UNUSED ADDRESS RANGES
         BANK6            00320-0032F              10           1
         BIGRAM           02000-021EF             1F0           1
         CODE             00002-00003               2           2
-                         00167-01FFF             800
+                         00168-01FFF             800
         COMMON           0007C-0007D               2           1
         CONST            00002-00003               2           2
-                         00167-01FFF             100
+                         00168-01FFF             100
         ENTRY            00002-00003               2           2
-                         00167-01FFF             100
+                         00168-01FFF             100
         IDLOC            08000-08003               4           2
         RAM              0003A-0006F              36           1
                          000A0-000EF              50
@@ -319,9 +319,9 @@ UNUSED ADDRESS RANGES
         SFR9             00480-004EF              70           1
         STACK            0201A-021EF             1D6           1
         STRCODE          00002-00003               2           2
-                         00167-01FFF            1E99
+                         00168-01FFF            1E98
         STRING           00002-00003               2           2
-                         00167-01FFF             100
+                         00168-01FFF             100
 
                                   Symbol Table
 
@@ -347,7 +347,7 @@ _LATC                                (abs)        0010E
 _OPTION_REG                          (abs)        00095
 _OPTION_REGbits                      (abs)        00095
 _OSCCON                              (abs)        00099
-_OSCILLATOR_Initialize               text6        00162
+_OSCILLATOR_Initialize               text6        00163
 _OSCSTAT                             (abs)        0009A
 _PIE1bits                            (abs)        00091
 _PIN_MANAGER_Initialize              text5        0009C
@@ -587,7 +587,7 @@ __end_of_EUSART_Receive_ISR          text12       000F4
 __end_of_EUSART_Transmit_ISR         text11       0009C
 __end_of_EUSART_str_Write            text2        00072
 __end_of_INTERRUPT_InterruptManager  intentry     00027
-__end_of_OSCILLATOR_Initialize       text6        00167
+__end_of_OSCILLATOR_Initialize       text6        00168
 __end_of_PIN_MANAGER_Initialize      text5        000BE
 __end_of_SYSTEM_Initialize           text3        0014B
 __end_of_TMR0_CallBack               text10       00130
@@ -613,7 +613,7 @@ __ptext2                             text2        00039
 __ptext3                             text3        0013F
 __ptext4                             text4        00130
 __ptext5                             text5        0009C
-__ptext6                             text6        00162
+__ptext6                             text6        00163
 __ptext7                             text7        000BE
 __ptext9                             text9        00109
 __size_of_EUSART_Initilize           (abs)        00000
@@ -641,7 +641,7 @@ _main                                maintext     000F4
 _sendUart                            text1        0014B
 _timer0ReloadVal                     nvBANK0      00037
 btemp                                (abs)        0007E
-clear_ram0                           clrtext      0015C
+clear_ram0                           clrtext      0015D
 end_of_initialization                cinit        00035
 int$flags                            (abs)        0007E
 intlevel0                            functab      00000
@@ -743,7 +743,7 @@ Total ram usage:        0 bytes
 		line 138 in file "mcc_generated_files/eusart.c"
  Parameters:    Size  Location     Type
   txData          2    2[COMMON] PTR unsigned char 
-		 -> STR_1(6), 
+		 -> STR_1(7), 
  Auto vars:     Size  Location     Type
   i               2    0[BANK0 ] int 
  Return value:  Size  Location     Type
@@ -1098,7 +1098,7 @@ shared
 shared estimated size: 13
 
 mcc_generated_files/mcc.c
-		_OSCILLATOR_Initialize		CODE           	0162	0000	6
+		_OSCILLATOR_Initialize		CODE           	0163	0000	6
 		_SYSTEM_Initialize		CODE           	013F	0000	13
 
 mcc_generated_files/mcc.c estimated size: 19
