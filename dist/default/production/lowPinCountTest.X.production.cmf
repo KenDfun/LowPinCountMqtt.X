@@ -11,6 +11,10 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
+$C:\Users\ken\AppData\Local\Temp\s7o8.obj
+reset_vec CODE 0 0 0 2 2
+end_init CODE 0 27 27 2 2
+config CONFIG 0 8007 8007 2 2
 $dist/default/production\lowPinCountTest.X.production.obj
 cinit CODE 0 29 29 10 2
 text1 CODE 0 14B 14B B 2
@@ -33,10 +37,6 @@ bssBANK0 BANK0 1 20 20 16 1
 stringtext STRCODE 0 156 156 7 2
 clrtext CODE 0 15D 15D 6 2
 bssCOMMON COMMON 1 77 77 5 1
-$C:\Users\ken\AppData\Local\Temp\s7as.obj
-reset_vec CODE 0 0 0 2 2
-end_init CODE 0 27 27 2 2
-config CONFIG 0 8007 8007 2 2
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
 # is described on a single line as follows:
@@ -117,23 +117,23 @@ STRING 168-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\lowPinCountTest.X.production.obj
-29 cinit CODE >2421:C:\Users\ken\AppData\Local\Temp\s7as.
-29 cinit CODE >2424:C:\Users\ken\AppData\Local\Temp\s7as.
-29 cinit CODE >2481:C:\Users\ken\AppData\Local\Temp\s7as.
-2A cinit CODE >2482:C:\Users\ken\AppData\Local\Temp\s7as.
-2B cinit CODE >2483:C:\Users\ken\AppData\Local\Temp\s7as.
-2C cinit CODE >2484:C:\Users\ken\AppData\Local\Temp\s7as.
-2D cinit CODE >2485:C:\Users\ken\AppData\Local\Temp\s7as.
-2E cinit CODE >2489:C:\Users\ken\AppData\Local\Temp\s7as.
-2F cinit CODE >2490:C:\Users\ken\AppData\Local\Temp\s7as.
-30 cinit CODE >2491:C:\Users\ken\AppData\Local\Temp\s7as.
-31 cinit CODE >2492:C:\Users\ken\AppData\Local\Temp\s7as.
-32 cinit CODE >2493:C:\Users\ken\AppData\Local\Temp\s7as.
-33 cinit CODE >2494:C:\Users\ken\AppData\Local\Temp\s7as.
-35 cinit CODE >2500:C:\Users\ken\AppData\Local\Temp\s7as.
-35 cinit CODE >2502:C:\Users\ken\AppData\Local\Temp\s7as.
-36 cinit CODE >2503:C:\Users\ken\AppData\Local\Temp\s7as.
-37 cinit CODE >2504:C:\Users\ken\AppData\Local\Temp\s7as.
+29 cinit CODE >2421:C:\Users\ken\AppData\Local\Temp\s7o8.
+29 cinit CODE >2424:C:\Users\ken\AppData\Local\Temp\s7o8.
+29 cinit CODE >2481:C:\Users\ken\AppData\Local\Temp\s7o8.
+2A cinit CODE >2482:C:\Users\ken\AppData\Local\Temp\s7o8.
+2B cinit CODE >2483:C:\Users\ken\AppData\Local\Temp\s7o8.
+2C cinit CODE >2484:C:\Users\ken\AppData\Local\Temp\s7o8.
+2D cinit CODE >2485:C:\Users\ken\AppData\Local\Temp\s7o8.
+2E cinit CODE >2489:C:\Users\ken\AppData\Local\Temp\s7o8.
+2F cinit CODE >2490:C:\Users\ken\AppData\Local\Temp\s7o8.
+30 cinit CODE >2491:C:\Users\ken\AppData\Local\Temp\s7o8.
+31 cinit CODE >2492:C:\Users\ken\AppData\Local\Temp\s7o8.
+32 cinit CODE >2493:C:\Users\ken\AppData\Local\Temp\s7o8.
+33 cinit CODE >2494:C:\Users\ken\AppData\Local\Temp\s7o8.
+35 cinit CODE >2500:C:\Users\ken\AppData\Local\Temp\s7o8.
+35 cinit CODE >2502:C:\Users\ken\AppData\Local\Temp\s7o8.
+36 cinit CODE >2503:C:\Users\ken\AppData\Local\Temp\s7o8.
+37 cinit CODE >2504:C:\Users\ken\AppData\Local\Temp\s7o8.
 4 intentry CODE >52:C:\src\PIC\test\lowPinCountTest.X\mcc_generated_files/interrupt_manager.c
 9 intentry CODE >54:C:\src\PIC\test\lowPinCountTest.X\mcc_generated_files/interrupt_manager.c
 C intentry CODE >55:C:\src\PIC\test\lowPinCountTest.X\mcc_generated_files/interrupt_manager.c
@@ -249,14 +249,14 @@ FE maintext CODE >85:C:\src\PIC\test\lowPinCountTest.X\main.c
 102 maintext CODE >87:C:\src\PIC\test\lowPinCountTest.X\main.c
 105 maintext CODE >90:C:\src\PIC\test\lowPinCountTest.X\main.c
 108 maintext CODE >83:C:\src\PIC\test\lowPinCountTest.X\main.c
-15D clrtext CODE >2470:C:\Users\ken\AppData\Local\Temp\s7as.
-15D clrtext CODE >2471:C:\Users\ken\AppData\Local\Temp\s7as.
-15E clrtext CODE >2472:C:\Users\ken\AppData\Local\Temp\s7as.
-15E clrtext CODE >2473:C:\Users\ken\AppData\Local\Temp\s7as.
-15F clrtext CODE >2474:C:\Users\ken\AppData\Local\Temp\s7as.
-160 clrtext CODE >2475:C:\Users\ken\AppData\Local\Temp\s7as.
-161 clrtext CODE >2476:C:\Users\ken\AppData\Local\Temp\s7as.
-162 clrtext CODE >2477:C:\Users\ken\AppData\Local\Temp\s7as.
+15D clrtext CODE >2470:C:\Users\ken\AppData\Local\Temp\s7o8.
+15D clrtext CODE >2471:C:\Users\ken\AppData\Local\Temp\s7o8.
+15E clrtext CODE >2472:C:\Users\ken\AppData\Local\Temp\s7o8.
+15E clrtext CODE >2473:C:\Users\ken\AppData\Local\Temp\s7o8.
+15F clrtext CODE >2474:C:\Users\ken\AppData\Local\Temp\s7o8.
+160 clrtext CODE >2475:C:\Users\ken\AppData\Local\Temp\s7o8.
+161 clrtext CODE >2476:C:\Users\ken\AppData\Local\Temp\s7o8.
+162 clrtext CODE >2477:C:\Users\ken\AppData\Local\Temp\s7o8.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -288,11 +288,11 @@ _LATC 10E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 _TMR0 15 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 _WPUA 20C 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 _WPUB 20D 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
-___sp 0 0 STACK 2 stack C:\Users\ken\AppData\Local\Temp\s7as.obj
+___sp 0 0 STACK 2 stack C:\Users\ken\AppData\Local\Temp\s7o8.obj
 _main 1E8 0 CODE 0 maintext dist/default/production\lowPinCountTest.X.production.obj
 btemp 7E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 ltemp 7E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
-start 4E 0 CODE 0 init C:\Users\ken\AppData\Local\Temp\s7as.obj
+start 4E 0 CODE 0 init C:\Users\ken\AppData\Local\Temp\s7o8.obj
 ttemp 7E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 wtemp 7E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
@@ -305,12 +305,12 @@ ttemp2 84 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 ttemp3 87 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 ttemp4 7F 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __size_of_SYSTEM_Initialize 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
-intlevel0 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
-intlevel1 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
-intlevel2 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
-intlevel3 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
-intlevel4 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
-intlevel5 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7as.obj
+intlevel0 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
+intlevel1 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
+intlevel2 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
+intlevel3 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
+intlevel4 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
+intlevel5 0 0 CODE 0 functab C:\Users\ken\AppData\Local\Temp\s7o8.obj
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 wtemp0 7E 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 wtemp1 80 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
@@ -344,7 +344,7 @@ _SPBRGH 19C 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 _SPBRGL 19B 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __pcstackBANK0 38 0 BANK0 1 cstackBANK0 dist/default/production\lowPinCountTest.X.production.obj
 __size_of_EUSART_Initilize 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
-___int_sp 0 0 STACK 2 stack C:\Users\ken\AppData\Local\Temp\s7as.obj
+___int_sp 0 0 STACK 2 stack C:\Users\ken\AppData\Local\Temp\s7o8.obj
 _eusartTxBufferWorkingFlag 7A 0 COMMON 1 bssCOMMON dist/default/production\lowPinCountTest.X.production.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
@@ -497,7 +497,7 @@ _SYSTEM_Initialize 27E 0 CODE 0 text3 dist/default/production\lowPinCountTest.X.
 __CFG_BOREN$ON 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __HnvBANK0 0 0 ABS 0 nvBANK0 -
 __Lintentry 8 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec C:\Users\ken\AppData\Local\Temp\s7as.obj
+reset_vec 0 0 CODE 0 reset_vec C:\Users\ken\AppData\Local\Temp\s7o8.obj
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 __size_of_sendUart 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __CFG_FCMEN$ON 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
@@ -544,8 +544,8 @@ __CFG_IESO$ON 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.o
 __end_of_TMR0_ISR 23C 0 CODE 0 text9 dist/default/production\lowPinCountTest.X.production.obj
 __CFG_WDTE$OFF 0 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 TMR0_ISR@CountCallBack 31 0 BANK0 1 bssBANK0 dist/default/production\lowPinCountTest.X.production.obj
-stackhi 21EF 0 ABS 0 - C:\Users\ken\AppData\Local\Temp\s7as.obj
-stacklo 201A 0 ABS 0 - C:\Users\ken\AppData\Local\Temp\s7as.obj
+stackhi 21EF 0 ABS 0 - C:\Users\ken\AppData\Local\Temp\s7o8.obj
+stacklo 201A 0 ABS 0 - C:\Users\ken\AppData\Local\Temp\s7o8.obj
 _OSCSTAT 9A 0 ABS 0 - dist/default/production\lowPinCountTest.X.production.obj
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -

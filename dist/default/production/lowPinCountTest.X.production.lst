@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.35 build -356382666 
-                                                                                               Sat Nov 28 17:38:11 2015
+                                                                                               Sat Nov 28 17:40:25 2015
 
 Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080246
      1                           	processor	16F1509
@@ -1186,7 +1186,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1180  0157  3465               	retlw	101	;'e'
   1181  0158  3473               	retlw	115	;'s'
   1182  0159  3474               	retlw	116	;'t'
-  1183  015A  3470               	retlw	112	;'p'
+  1183  015A  3471               	retlw	113	;'q'
   1184  015B  3420               	retlw	32	;' '
   1185  015C  3400               	retlw	0
   1186                           
@@ -1486,7 +1486,7 @@ Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080
   1480  014C  1903               	btfsc	3,2
   1481  014D  0008               	return
   1482                           
-  1483                           ;main.c: 98: EUSART_str_Write((uint8_t *)"testp ");
+  1483                           ;main.c: 98: EUSART_str_Write((uint8_t *)"testq ");
   1484  014E  3056               	movlw	low (STR_1| (0+32768))
   1485  014F  00F2               	movwf	EUSART_str_Write@txData
   1486  0150  3081               	movlw	high (STR_1| (0+32768))
@@ -2686,7 +2686,7 @@ SFR31                0      0       0      32        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.35 build -356382666 
-Symbol Table                                                                                   Sat Nov 28 17:38:11 2015
+Symbol Table                                                                                   Sat Nov 28 17:40:25 2015
 
                         __CFG_CP$OFF 0000                      _timer0ReloadVal 0037  
                         __CFG_LVP$ON 0000                                  l937 003C  
