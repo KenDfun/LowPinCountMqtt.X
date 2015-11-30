@@ -110,8 +110,6 @@ void EUSART_Initilize(void) {
 
     // enable receive interrupt
     PIE1bits.RCIE = 1;
-    RCSTAbits.CREN = 1;
-
 }
 
 
@@ -120,7 +118,6 @@ uint8_t EUSART_Read(void) {
 
     while (0 == eusartRxCount) {
     }
-    RC1 ^= 1;
 
     PIE1bits.RCIE = 0;
 
@@ -141,7 +138,7 @@ void EUSART_Write(uint8_t txData){
 void EUSART_str_Write(uint8_t *txData)
 {
   int i=0;
-  
+
   while (eusartTxBufferWorkingFlag) {
   }
 
@@ -152,7 +149,7 @@ void EUSART_str_Write(uint8_t *txData)
       break;
     }
     if(i>=EUSART_TX_BUFFER_SIZE){
-        RC3=1;
+      RC3=1;
       break;
     }
   }
