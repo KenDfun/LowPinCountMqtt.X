@@ -45,9 +45,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  */
 
 #include "mcc_generated_files/mcc.h"
+#include <stdio.h>
+#include <string.h>
 
 void sendUart(void);
 void EUSART_str_Write(char *txData);
+void wiflyInitState(void);
 
 volatile char Heart_beat_flag = 0;
 volatile char Transmit_flag = 0;
@@ -79,6 +82,7 @@ void main(void) {
     RC1=0;
     RC2=0;
     RC3=0;
+    EUSART_str_Write((uint8_t *)"Start!\r\n");
 
     while (1) {
         // Add your application code
@@ -87,15 +91,61 @@ void main(void) {
             RC0 ^= 1;
         }
 
-        sendUart();
+
+        wiflyInitState();
+
+
+
     }
+}
+typedef enum{
+  StateCmdDDD,
+  StateWaitCMD,
+  StateCmdMode,
+} StateWiflyInit;
+
+void wiflyInitState(void)
+{
+  static StateWiflyInit state = StateCmdDDD;
+  static const char* strCmdMode = "CMD";
+  static unsigned char cmdChkBuf[4];
+  static char locate = 0;
+
+  switch(state){
+    case StateCmdDDD:
+      EUSART_str_Write((uint8_t *)"$$$");
+      state = StateWaitCMD;
+      break;
+
+    case StateWaitCMD:
+      cmdChkBuf[0]=(unsigned char)EUSART_Read();
+      cmdChkBuf[1]=(unsigned char)EUSART_Read();
+      cmdChkBuf[2]=(unsigned char)EUSART_Read();
+      cmdChkBuf[3]='\0';
+      if(strncmp(cmdChkBuf,"CMD",3)!=0){
+        RC2=1;
+        while(1);
+      }
+      state = StateCmdMode;
+      EUSART_str_Write((uint8_t *)"To the Cmd\r\n");
+      break;
+
+    case StateCmdMode:
+    break;
+
+    default:
+      RC3=1;
+      while (1) {
+        /* code */
+      }
+  }
 }
 
 void sendUart(void)
 {
 
     if(Transmit_flag){
-      EUSART_str_Write((uint8_t *)"testv ");
+      EUSART_str_Write((uint8_t *)"testw ");
       Transmit_flag = 0;
     }
 
