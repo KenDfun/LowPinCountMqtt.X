@@ -49,58 +49,35 @@ int mqtt_pub(void)
 		goto exit;
 
 
-
-	// printf("Publishing\n");
-	/* publish with short name */
+  /* subscribe */
+	// printf("Subscribing\n");
 	topic.type = MQTTSN_TOPIC_TYPE_NORMAL;
-	topic.data.id = topicid;
-	++packetid;
-	len = MQTTSNSerialize_publish(buf, buflen, dup, qos, retained, packetid,
-			topic, payload, payloadlen);
-	rc = transport_sendPacketBuffer(host, port, buf, len);
+	topic.data.long_.name = topicname;
+	topic.data.long_.len = strlen(topic.data.long_.name);
+	len = MQTTSNSerialize_subscribe(buf, buflen, 0, 2, packetid, &topic);
+	rc = wifly_sendPacketBuffer(host, port, buf, len);
 
-	/* wait for puback */
-	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_PUBACK)
+	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_SUBACK) 	/* wait for suback */
 	{
-		unsigned short packet_id, topic_id;
+		unsigned short submsgid;
+		int granted_qos;
 		unsigned char returncode;
 
-		if (MQTTSNDeserialize_puback(&topic_id, &packet_id, &returncode, buf, buflen) != 1 || returncode != MQTTSN_RC_ACCEPTED)
-			printf("Unable to publish, return code %d\n", returncode);
-		else
-			printf("puback received, msgid %d topic id %d\n", packet_id, topic_id);
-	}
-	else
-		goto exit;
-
-	printf("Receive publish\n");
-	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_PUBLISH)
-	{
-		unsigned short packet_id;
-		int qos, payloadlen;
-		unsigned char* payload;
-		unsigned char dup, retained;
-		MQTTSN_topicid pubtopic;
-
-		if (MQTTSNDeserialize_publish(&dup, &qos, &retained, &packet_id, &pubtopic,
-				&payload, &payloadlen, buf, buflen) != 1)
-			printf("Error deserializing publish\n");
-		else
-			printf("publish received, id %d qos %d\n", packet_id, qos);
-
-		if (qos == 1)
+		rc = MQTTSNDeserialize_suback(&granted_qos, &topicid, &submsgid, &returncode, buf, buflen);
+		if (granted_qos != 2 || returncode != 0)
 		{
-			len = MQTTSNSerialize_puback(buf, buflen, pubtopic.data.id, packet_id, MQTTSN_RC_ACCEPTED);
-			rc = transport_sendPacketBuffer(host, port, buf, len);
-			if (rc == 0)
-				printf("puback sent\n");
+			// printf("granted qos != 2, %d return code %d\n", granted_qos, returncode);
+      disp_err();
+			goto exit;
 		}
+		else
+    {
+      RC1=1;
+      // printf("suback topic id %d\n", topicid);
+    }
 	}
 	else
 		goto exit;
-
-	len = MQTTSNSerialize_disconnect(buf, buflen, 0);
-	rc = transport_sendPacketBuffer(host, port, buf, len);
 
 exit:
 	wifly_close();
