@@ -1,3 +1,5 @@
+
+#include <xc.h>
 #include "util_lib.h"
 
 void disp_err(void)

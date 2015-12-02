@@ -64,6 +64,7 @@ static uint8_t eusartTxTail = 0;
 static uint8_t eusartTxBuffer[EUSART_TX_BUFFER_SIZE+1];
 volatile uint8_t eusartTxBufferRemaining=0;
 volatile uint8_t eusartTxBufferWorkingFlag=0;
+static int eusartTxBufferSize;
 
 static uint8_t eusartRxHead = 0;
 static uint8_t eusartRxTail = 0;
@@ -131,41 +132,95 @@ uint8_t EUSART_Read(void) {
     return readValue;
 }
 
+void EUSART_Read_BufClear(void) {
+  PIE1bits.RCIE = 0;
+  eusartRxTail=0;
+  eusartRxCount=0;
+  eusartRxHead=0;
+  PIE1bits.RCIE = 1;
+}
 void EUSART_Write(uint8_t txData){
     return;
 }
 
-void EUSART_str_Write(uint8_t *txData)
+void EUSART_Str_Write(uint8_t *txData)
 {
   int i=0;
+  int loopflag=1;
+  uint8_t *txDataPoint = txData;
 
-  while (eusartTxBufferWorkingFlag) {
+  while(loopflag){
+    while (eusartTxBufferWorkingFlag) {
+    }
+
+    PIE1bits.TXIE = 0;
+    while(1){
+      eusartTxBuffer[i] = txDataPoint[i];
+      if(txData[i++]=='\0'){
+        // tx data end.
+        eusartTxBufferSize = i;
+        loopflag=0;
+        break;
+      }
+      if(i>=EUSART_TX_BUFFER_SIZE){
+        eusartTxBufferSize = EUSART_TX_BUFFER_SIZE;
+        txDataPoint += i;
+        i=0;
+        RC3=1;
+        break;
+      }
+    }
+    // send data
+    eusartTxBufferWorkingFlag = 1;
+    eusartTxTail = 0;
+    PIE1bits.TXIE = 1;
   }
 
-  PIE1bits.TXIE = 0;
-  while(1){
-    eusartTxBuffer[i] = txData[i];
-    if(txData[i++]=='\0'){
-      break;
-    }
-    if(i>=EUSART_TX_BUFFER_SIZE){
-      RC3=1;
-      break;
-    }
-  }
-
-  eusartTxBufferWorkingFlag = 1;
-  eusartTxTail = 0;
-
-  PIE1bits.TXIE = 1;
 }
 
+void EUSART_Data_Write(uint8_t *txData,int len)
+{
+  int i=0; // point for txData
+  int dataCount=0; // number of being copyed to txBuffer
+  int loopflag=1;
+
+  while(loopflag){
+    //wait sending data
+    while (eusartTxBufferWorkingFlag) {
+    }
+    //set up tx buffer
+    PIE1bits.TXIE = 0;
+    while(1){
+      // copy txData to tx buffer
+      eusartTxBuffer[dataCount++] = txData[i++];
+      // finish to copy sending data
+      if(i>=len){
+        // tx data end.
+        eusartTxBufferSize = dataCount;
+        loopflag=0;
+        break;
+      }
+
+      // tx buffer full
+      if(i>=EUSART_TX_BUFFER_SIZE){
+        eusartTxBufferSize = EUSART_TX_BUFFER_SIZE;
+        dataCount=0;
+        RC3=1;
+        break;
+      }
+    }
+    // send data
+    eusartTxBufferWorkingFlag = 1;
+    eusartTxTail = 0;
+    PIE1bits.TXIE = 1;
+  }
+}
 
 
 void EUSART_Transmit_ISR(void) {
 
     // add your EUSART interrupt custom code
-    if(!eusartTxBufferWorkingFlag || (eusartTxBuffer[eusartTxTail]=='\0')){
+    if(!eusartTxBufferWorkingFlag){
       PIE1bits.TXIE = 0;
       eusartTxBufferWorkingFlag = 0;
       // for debug
@@ -174,7 +229,7 @@ void EUSART_Transmit_ISR(void) {
     }
 
     TXREG = eusartTxBuffer[eusartTxTail++];
-    if((eusartTxTail>=EUSART_TX_BUFFER_SIZE) || (eusartTxBuffer[eusartTxTail]=='\0')){
+    if(eusartTxTail>=eusartTxBufferSize){
       PIE1bits.TXIE = 0;
       eusartTxBufferWorkingFlag = 0;
     }
