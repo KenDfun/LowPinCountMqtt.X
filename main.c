@@ -47,12 +47,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "mcc_generated_files/mcc.h"
 #include "wifly_lib.h"
 #include "util_lib.h"
+
 #include <stdio.h>
 #include <string.h>
 
 void sendUart(void);
 void EUSART_Str_Write(uint8_t *txData);
 void wiflyInitState(void);
+int mqtt_pub(void);
 
 volatile char Heart_beat_flag = 0;
 volatile char Transmit_flag = 0;
@@ -140,10 +142,12 @@ void wiflyInitState(void)
       teststack[4]=0x55;
       teststack[5]=0xaa;
 dump(teststack,17);
+    mqtt_pub();
       state = StateCloseCmd;
     break;
 
     case StateCloseCmd:
+
       // wifly_close();
     break;
 
@@ -154,17 +158,6 @@ dump(teststack,17);
         /* code */
       }
   }
-}
-
-void sendUart(void)
-{
-
-    if(Transmit_flag){
-      EUSART_Str_Write((uint8_t *)"testw ");
-      Transmit_flag = 0;
-    }
-
-
 }
 
 /**
