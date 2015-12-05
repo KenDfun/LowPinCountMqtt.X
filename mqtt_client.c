@@ -4,11 +4,11 @@
 
 #include "MQTTSNPacket.h"
 
+extern uint8_t WiflyBuf[];
 
 int mqtt_pub(void)
 {
-	unsigned char buf[200];
-	int buflen = sizeof(buf);
+	int buflen = sizeof(WiflyBuf);
 	MQTTSN_topicid topic;
 	unsigned char* payload = (unsigned char*)"payload";
 	int payloadlen = strlen((char*)payload);
@@ -23,14 +23,13 @@ int mqtt_pub(void)
 	MQTTSNPacket_connectData options = MQTTSNPacket_connectData_initializer;
 	unsigned short topicid;
 
-	wifly_open(host,port);
-	// printf("Sending to hostname %s port %d\n", host, port);
-
 	options.clientID.cstring = "MQTT-SN";
-	len = MQTTSNSerialize_connect(buf, buflen, &options);
-	wifly_sendPacketBuffer(host, port, buf, len);
+	len = MQTTSNSerialize_connect(WiflyBuf, buflen, &options);
+  dump(WiflyBuf,len);
+	// wifly_sendPacketBuffer(WiflyBuf, len);
 
 	/* wait for connack */
+/*
 	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_CONNACK)
 	{
 		int connack_rc = -1;
@@ -48,8 +47,10 @@ int mqtt_pub(void)
 	else
 		goto exit;
 
+*/
 
   /* subscribe */
+/*
 	// printf("Subscribing\n");
 	topic.type = MQTTSN_TOPIC_TYPE_NORMAL;
 	topic.data.long_.name = topicname;
@@ -57,7 +58,7 @@ int mqtt_pub(void)
 	len = MQTTSNSerialize_subscribe(buf, buflen, 0, 2, packetid, &topic);
 	rc = wifly_sendPacketBuffer(host, port, buf, len);
 
-	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_SUBACK) 	/* wait for suback */
+	if (MQTTSNPacket_read(buf, buflen, transport_getdata) == MQTTSN_SUBACK) 	// wait for suback
 	{
 		unsigned short submsgid;
 		int granted_qos;
@@ -81,11 +82,7 @@ int mqtt_pub(void)
 
 exit:
 	wifly_close();
-
+*/
 	return 0;
-}
 
-void disp_err(voie)
-{
-  RC2=1;
 }

@@ -78,7 +78,7 @@
                 <setting name="OERR" option="no_error" register="RCSTA"/>
                 <setting name="RX9" option="8-bit" register="RCSTA"/>
                 <setting name="RX9D" option="0x0" register="RCSTA"/>
-                <setting name="CREN" option="disabled" register="RCSTA"/>
+                <setting name="CREN" option="enabled" register="RCSTA"/>
                 <setting name="ADDEN" option="disabled" register="RCSTA"/>
                 <setting name="SREN" option="disabled" register="RCSTA"/>
                 <setting name="FERR" option="no_error" register="RCSTA"/>
@@ -128,7 +128,7 @@
             <setting name="inputBuffer" option="8"/>
             <setting name="outputBuffer" option="8"/>
             <setting name="stdio" option="false"/>
-            <file checksum="1174668271" modified="false" name="eusart.c" path="mcc_generated_files/eusart.c"/>
+            <file checksum="2801838380" modified="true" name="eusart.c" path="mcc_generated_files/eusart.c"/>
             <file checksum="452977932" modified="false" name="eusart.h" path="mcc_generated_files/eusart.h"/>
         </module>
         <module generated="true" mode="Timer" name="TMR0" order="2" reloadPin="manual" type="tmr_0">

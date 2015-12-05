@@ -62,6 +62,7 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibFileItem>MQTT_paho_lib.lpp</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>

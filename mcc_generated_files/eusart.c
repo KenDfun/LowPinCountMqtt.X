@@ -85,8 +85,8 @@ void EUSART_Initilize(void) {
     // ABDOVF no_overflow; SCKP async_noninverted_sync_fallingedge; RCIDL idle; BRG16 16bit_generator; WUE disabled; ABDEN disabled;
     BAUDCON = 0x48;
 
-    // SPEN enabled; OERR no_error; RX9 8-bit; RX9D 0x0; CREN disabled; ADDEN disabled; SREN disabled; FERR no_error;
-    RCSTA = 0x80;
+    // SPEN enabled; OERR no_error; RX9 8-bit; RX9D 0x0; CREN enabled; ADDEN disabled; SREN disabled; FERR no_error;
+    RCSTA = 0x90;
 
     // TRMT TSR_empty; TX9 8-bit; TX9D 0x0; SENDB sync_break_complete; TXEN enabled; SYNC asynchronous; BRGH hi_speed; CSRC slave_mode;
     TXSTA = 0x26;
@@ -113,6 +113,41 @@ void EUSART_Initilize(void) {
     PIE1bits.RCIE = 1;
 }
 
+void EUSART_NoTransmit(void) {
+    // disable interrupts before changing states
+    PIE1bits.RCIE = 0;
+    PIE1bits.TXIE = 0;
+
+    // Set the EUSART module to the options selected in the user interface.
+
+    // ABDOVF no_overflow; SCKP async_noninverted_sync_fallingedge; RCIDL idle; BRG16 16bit_generator; WUE disabled; ABDEN disabled;
+    BAUDCON = 0x48;
+
+    // SPEN enabled; OERR no_error; RX9 8-bit; RX9D 0x0; CREN disabled; ADDEN disabled; SREN disabled; FERR no_error;
+    RCSTA = 0x80;
+
+    // TRMT TSR_empty; TX9 8-bit; TX9D 0x0; SENDB sync_break_complete; TXEN disabled; SYNC asynchronous; BRGH hi_speed; CSRC slave_mode;
+    TXSTA = 0x06;
+
+    // SPBRGL 160;
+    SPBRGL = 0xA0;
+
+    // SPBRGH 1;
+    SPBRGH = 0x01;
+
+
+    // initializing the driver state
+    // eusartTxHead = 0;
+    eusartTxTail = 0;
+    eusartTxBufferRemaining = sizeof (eusartTxBuffer);
+
+    eusartRxHead = 0;
+    eusartRxTail = 0;
+    eusartRxCount = 0;
+
+    // enable receive interrupt
+    PIE1bits.RCIE = 1;
+}
 
 uint8_t EUSART_Read(void) {
     uint8_t readValue = 0;
@@ -139,8 +174,21 @@ void EUSART_Read_BufClear(void) {
   eusartRxHead=0;
   PIE1bits.RCIE = 1;
 }
+
 void EUSART_Write(uint8_t txData){
-    return;
+  while (eusartTxBufferWorkingFlag) {
+  }
+
+  PIE1bits.TXIE = 0;
+  eusartTxBuffer[0] = txData;
+  eusartTxBufferSize = 1;
+
+  // send data
+  eusartTxBufferWorkingFlag = 1;
+  eusartTxTail = 0;
+  PIE1bits.TXIE = 1;
+
+  return;
 }
 
 void EUSART_Str_Write(uint8_t *txData)
@@ -156,25 +204,24 @@ void EUSART_Str_Write(uint8_t *txData)
     PIE1bits.TXIE = 0;
     while(1){
       eusartTxBuffer[i] = txDataPoint[i];
-      if(txData[i++]=='\0'){
+      if(txDataPoint[i++]=='\0'){
         // tx data end.
         eusartTxBufferSize = i;
         loopflag=0;
         break;
-      }
+        }
       if(i>=EUSART_TX_BUFFER_SIZE){
         eusartTxBufferSize = EUSART_TX_BUFFER_SIZE;
-        txDataPoint += i;
+        txDataPoint = &txDataPoint[i];
         i=0;
-        RC3=1;
         break;
-      }
     }
+  }
     // send data
     eusartTxBufferWorkingFlag = 1;
     eusartTxTail = 0;
     PIE1bits.TXIE = 1;
-  }
+}
 
 }
 
