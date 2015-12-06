@@ -28,7 +28,8 @@ int mqtt_connect(void)
 	// data.password.cstring = "testpassword";
 
 	len = MQTTSerialize_connect(buf, buflen, &data);
-	EUSART_Str_Write((uint8_t *)"\rconnect");
+  EUSART_Data_Write(buf,len);
+	// EUSART_Str_Write((uint8_t *)"\rconnect");
   // dump(buf,len);
 
   /* wait for connack */
@@ -62,8 +63,9 @@ int mqtt_subscribe(void)
   /* subscribe */
 	topicString.cstring = (char *)"design-fun.com/led";
 	len = MQTTSerialize_subscribe(buf, buflen, 0, msgid, 1, &topicString, &req_qos);
+  EUSART_Data_Write(buf,len);
 
-	EUSART_Str_Write((uint8_t *)"\rsubscribe");
+	// EUSART_Str_Write((uint8_t *)"\rsubscribe");
 	// dump(buf,len);
 	if (MQTTPacket_read(buf, buflen, transport_getdata) == SUBACK) 	/* wait for suback */
 	{
@@ -91,7 +93,7 @@ int mqtt_get_msg(void)
 	int buflen = sizeof(WiflyBuf);
 	int rc = 0;
 
-  EUSART_Str_Write((uint8_t *)"\rwaitmsg\n");
+  // EUSART_Str_Write((uint8_t *)"\rwaitmsg\n");
 
 	/* transport_getdata() has a built-in 1 second timeout,
 	your mileage will vary */
@@ -114,8 +116,8 @@ int mqtt_get_msg(void)
 		// EUSART_Str_Write((uint8_t *)dispbuf);
 		json_decode(payload_in,payloadlen_in,arry);
 		for(i=0;i<3;i++){
-			sprintf(dispbuf,"led[%d]:%d\r", i, arry[i]);
-			EUSART_Str_Write((uint8_t *)dispbuf);
+			// sprintf(dispbuf,"led[%d]:%d\r", i, arry[i]);
+			// EUSART_Str_Write((uint8_t *)dispbuf);
 		}
     led_update(arry);
 	}
@@ -133,6 +135,7 @@ int transport_getdata(unsigned char* buf, int len)
 
   for(i=0;i<len;i++){
     buf[i]=(unsigned char)EUSART_Read();
+    RC0 ^= 1;
   }
 
   return i;

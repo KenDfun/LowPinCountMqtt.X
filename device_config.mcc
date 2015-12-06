@@ -8,14 +8,15 @@
             <setting name="T1GSEL" option="RA4"/>
             <setting name="package" option="PDIP20"/>
             <setting name="sorting" option="true"/>
+            <resource customName="IO_RA2" digital="true" direction="INPUT" function="RA2" ioc="0" module="GPIO" name="RA2" start="false" type="pin" wpu="false"/>
             <resource customName="RX" digital="true" direction="INPUT" function="RX" ioc="0" module="EUSART" name="RB5" start="false" type="pin" wpu="false"/>
             <resource customName="TX" digital="true" direction="INPUT" function="TX" ioc="0" module="EUSART" name="RB7" start="false" type="pin" wpu="false"/>
             <resource customName="IO_RC0" digital="true" direction="OUTPUT" function="RC0" module="GPIO" name="RC0" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RC1" digital="true" direction="OUTPUT" function="RC1" module="GPIO" name="RC1" start="false" type="pin" wpu="false"/>
             <resource customName="IO_RC2" digital="true" direction="OUTPUT" function="RC2" module="GPIO" name="RC2" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RC3" digital="true" direction="OUTPUT" function="RC3" module="GPIO" name="RC3" start="false" type="pin" wpu="false"/>
-            <file checksum="2567935537" modified="false" name="pin_manager.c" path="mcc_generated_files/pin_manager.c"/>
-            <file checksum="333587703" modified="false" name="pin_manager.h" path="mcc_generated_files/pin_manager.h"/>
+            <file checksum="2503448109" modified="false" name="pin_manager.c" path="mcc_generated_files/pin_manager.c"/>
+            <file checksum="2179268926" modified="false" name="pin_manager.h" path="mcc_generated_files/pin_manager.h"/>
         </manager>
         <manager generated="true" name="System" reloadPin="manual">
             <initializer comment="" name="Initialize">
@@ -63,6 +64,7 @@
             <resource customName="IO_RC1" digital="true" direction="OUTPUT" function="RC1" module="GPIO" name="RC1" start="false" type="pin" wpu="false"/>
             <resource customName="IO_RC2" digital="true" direction="OUTPUT" function="RC2" module="GPIO" name="RC2" start="true" type="pin" wpu="false"/>
             <resource customName="IO_RC3" digital="true" direction="OUTPUT" function="RC3" module="GPIO" name="RC3" start="false" type="pin" wpu="false"/>
+            <resource customName="IO_RA2" digital="true" direction="INPUT" function="RA2" ioc="0" module="GPIO" name="RA2" start="false" type="pin" wpu="false"/>
         </module>
         <module generated="true" mode="EUSART Asynchronous(NRZ)" name="EUSART" order="1" reloadPin="manual" type="uart_autobd">
             <initializer comment="" name="Initilize">

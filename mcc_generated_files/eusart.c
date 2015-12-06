@@ -204,12 +204,14 @@ void EUSART_Str_Write(uint8_t *txData)
     PIE1bits.TXIE = 0;
     while(1){
       eusartTxBuffer[i] = txDataPoint[i];
-      if(txDataPoint[i++]=='\0'){
+      i++;
+      if(txDataPoint[i]=='\0'){
         // tx data end.
         eusartTxBufferSize = i;
         loopflag=0;
         break;
-        }
+      }
+
       if(i>=EUSART_TX_BUFFER_SIZE){
         eusartTxBufferSize = EUSART_TX_BUFFER_SIZE;
         txDataPoint = &txDataPoint[i];
@@ -241,7 +243,7 @@ void EUSART_Data_Write(uint8_t *txData,int len)
       // copy txData to tx buffer
       eusartTxBuffer[dataCount++] = txData[i++];
       // finish to copy sending data
-      if(i>=len){
+      if(dataCount>=len){
         // tx data end.
         eusartTxBufferSize = dataCount;
         loopflag=0;
@@ -249,10 +251,11 @@ void EUSART_Data_Write(uint8_t *txData,int len)
       }
 
       // tx buffer full
-      if(i>=EUSART_TX_BUFFER_SIZE){
+      if(dataCount>=EUSART_TX_BUFFER_SIZE){
         eusartTxBufferSize = EUSART_TX_BUFFER_SIZE;
         dataCount=0;
-        RC3=1;
+        len -= EUSART_TX_BUFFER_SIZE;
+        // RC3=1;
         break;
       }
     }
@@ -271,7 +274,7 @@ void EUSART_Transmit_ISR(void) {
       PIE1bits.TXIE = 0;
       eusartTxBufferWorkingFlag = 0;
       // for debug
-      RC3=1;
+      // RC3=1;
       return;
     }
 

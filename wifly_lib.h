@@ -10,6 +10,7 @@ int wifly_open(const unsigned char *host,int port);
 int wifly_sendPacketBuffer(unsigned char *buf, int len);
 int wifly_close(void);
 void wifly_command_mode(void);
+int wifly_ready(void);
 
 #define MAX_WIFLYBUF 200
 

@@ -98,22 +98,24 @@ void main(void) {
   while(!Transmit_flag);  //wait 1sec.
 
 
-    EUSART_Str_Write((uint8_t *)"\r\nStart!abcdefghijklmnopqrstu\r\n");
-    led_init();
+    // EUSART_Str_Write((uint8_t *)"\r\nStart!abcdefghijklmnopqrstu\r\n");
+  led_init();
 
-    while (1) {
-        // Add your application code
-        if(Heart_beat_flag){
-            Heart_beat_flag = 0;
-            RC0 ^= 1;
-        }
+// wifly_ready();
 
-
-        wiflyInitState();
-
+  while (1) {
+      // Add your application code
+      if(Heart_beat_flag){
+          Heart_beat_flag = 0;
+          RC0 ^= 1;
+      }
 
 
-    }
+      wiflyInitState();
+
+
+
+  }
 }
 typedef enum{
   StateCmdDDD,
@@ -123,6 +125,7 @@ typedef enum{
   StateMqttGegMsg,
   StateCloseCmd,
   StateIdle,
+  StateStop,
 } StateWiflyInit;
 
 void wiflyInitState(void)
@@ -151,32 +154,44 @@ void wiflyInitState(void)
     case StateMqttSubscribe:
       if(!mqtt_subscribe()){
         state = StateCloseCmd;
+        RC3 = 1;
+        break;
       }
       state = StateMqttGegMsg;
-      RC2 = 1;
     break;
 
     case StateMqttGegMsg:
       if(!mqtt_get_msg()){
         state = StateCloseCmd;
+        break;
       }
       state = StateCloseCmd;
-      RC3 = 1;
-      break;
+    break;
 
     case StateCloseCmd:
       led_show();
       wifly_close();
       state = StateIdle;
+      Transmit_flag = 0;
     break;
 
     case StateIdle:
+      if(RA2==0){
+        state = StateStop;
+        break;
+      }
+      if(Transmit_flag){
+        state = StateOpenCmd;
+        break;
+      }  //wait 1sec.
+    break;
+
+    case StateStop:
     break;
 
 
-
     default:
-      RC3=1;
+      // RC3=1;
       while (1) {
         /* code */
       }

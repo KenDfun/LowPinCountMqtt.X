@@ -48,11 +48,24 @@ int wifly_close(void)
   return 1;
 }
 
+int wifly_ready(void)
+{
+  wifly_wait_star();
+  if(!wifly_wait_response("READY*")){
+    disp_err_forever();
+  }
+
+}
+
+
 void wifly_command_mode(void)
 {
   static unsigned char cmdChkBuf[4];
 
+  // WiflyWriteStr("test\r\n\r");
+
   EUSART_Read_BufClear();
+  __delay_ms(250);
   WiflyWriteStr("$$$");
   __delay_ms(250);
   if(!wifly_wait_response("CMD")){
@@ -68,8 +81,10 @@ int wifly_wait_response(const unsigned char *rep)
 
   while(rep[i]!='\0'){
     chk = (unsigned char)EUSART_Read();
-    EUSART_Write(chk);
+    // RC3 ^= 1;
+    // EUSART_Write(chk);
     if(chk!=rep[i++]){
+      disp_err_forever();
       sprintf(WiflyBuf,"ERR 0x%x\r",chk);
       WiflyWriteStr(WiflyBuf);
       return 0;
@@ -85,6 +100,6 @@ int wifly_wait_star(void)
 
   do{
     chk = (unsigned char)EUSART_Read();
-    EUSART_Write(chk);
+    // EUSART_Write(chk);
   }while(chk!='*');
 }
