@@ -11,6 +11,7 @@ int wifly_sendPacketBuffer(unsigned char *buf, int len);
 int wifly_close(void);
 void wifly_command_mode(void);
 
+#define MAX_WIFLYBUF 200
 
 
 #endif /* WIFLY_LIB_H_ */

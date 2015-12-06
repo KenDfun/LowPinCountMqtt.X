@@ -1,0 +1,4 @@
+wait '$$$
+send 'CMD'
+wait '1883'
+send '*OPEN*'

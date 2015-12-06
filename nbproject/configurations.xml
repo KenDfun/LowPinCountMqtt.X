@@ -36,6 +36,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>util_lib.c</itemPath>
       <itemPath>wifly_lib.c</itemPath>
+      <itemPath>mqtt_client.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

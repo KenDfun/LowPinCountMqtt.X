@@ -56,6 +56,11 @@ void EUSART_Str_Write(uint8_t *txData);
 void wiflyInitState(void);
 int mqtt_pub(void);
 
+int mqtt_connect(void);
+int mqtt_subscribe(void);
+int mqtt_get_msg(void);
+
+
 volatile char Heart_beat_flag = 0;
 volatile char Transmit_flag = 0;
 
@@ -94,6 +99,7 @@ void main(void) {
 
 
     EUSART_Str_Write((uint8_t *)"\r\nStart!abcdefghijklmnopqrstu\r\n");
+    led_init();
 
     while (1) {
         // Add your application code
@@ -112,15 +118,17 @@ void main(void) {
 typedef enum{
   StateCmdDDD,
   StateOpenCmd,
-  StateMqtt,
+  StateMqttConnect,
+  StateMqttSubscribe,
+  StateMqttGegMsg,
   StateCloseCmd,
+  StateIdle,
 } StateWiflyInit;
 
 void wiflyInitState(void)
 {
   static StateWiflyInit state = StateCmdDDD;
   static char locate = 0;
-  char teststack[20];
 
   switch(state){
     case StateCmdDDD:
@@ -130,26 +138,41 @@ void wiflyInitState(void)
 
     case StateOpenCmd:
       wifly_open("test.mosquitto.org",1883);
-      state = StateMqtt;
+      state = StateMqttConnect;
     break;
 
-    case StateMqtt:
-      // mqtt_pub();
-      teststack[0]=1;
-      teststack[1]=10;
-      teststack[2]=4;
-      teststack[3]=3;
-      teststack[4]=0x55;
-      teststack[5]=0xaa;
-dump(teststack,17);
-    mqtt_pub();
-      state = StateCloseCmd;
+    case StateMqttConnect:
+      if(!mqtt_connect()){
+        state = StateCloseCmd;
+      }
+      state = StateMqttSubscribe;
     break;
+
+    case StateMqttSubscribe:
+      if(!mqtt_subscribe()){
+        state = StateCloseCmd;
+      }
+      state = StateMqttGegMsg;
+      RC2 = 1;
+    break;
+
+    case StateMqttGegMsg:
+      if(!mqtt_get_msg()){
+        state = StateCloseCmd;
+      }
+      state = StateCloseCmd;
+      RC3 = 1;
+      break;
 
     case StateCloseCmd:
-
-      // wifly_close();
+      led_show();
+      wifly_close();
+      state = StateIdle;
     break;
+
+    case StateIdle:
+    break;
+
 
 
     default:
